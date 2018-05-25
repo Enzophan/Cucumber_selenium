@@ -1,6 +1,7 @@
 package com.example;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -27,20 +28,30 @@ public class webExampleSteps {
         System.out.println("This Step open the firefox.");
     }
 
-@Given("^Waiting for Loading successful$")
-public void waiting_for_loading_successful() throws  Throwable
-{
-//    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    @Given("^Book Reservation$")
+    public void waiting_for_loading_successful() throws  Throwable
+    {
+    //    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-}
+    }
 
     @When("^Enter the Username and Password$")
     public void enter_the_Username_and_Password() throws Throwable
     {
         driver.findElement(By.className("btLogin")).click();
         WebElement phoneNumber = driver.findElement(By.cssSelector("input.form-control:nth-child(2)"));
-        phoneNumber.clear();
-        phoneNumber.sendKeys("+4474008889999");
+        phoneNumber.sendKeys(Keys.CONTROL + "a");
+        phoneNumber.sendKeys(Keys.DELETE);
+        phoneNumber.sendKeys("+84901223344");
+
+        WebElement password = driver.findElement(By.cssSelector("input.form-control:nth-child(1)"));
+        password.sendKeys("demo@12345");
+
+        WebElement signIn = driver.findElement(By.cssSelector(".submitLogin"));
+        signIn.click();
+
+
+
 //        driver.findElement(By.name("uid")).sendKeys("username12");
 //        driver.findElement(By.name("password")).sendKeys("password12");
         System.out.println("This Step enter User and Password.");
