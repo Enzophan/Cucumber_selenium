@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+import java.text.ParseException;
 
 public class webExampleSteps {
 
@@ -60,9 +61,57 @@ public class webExampleSteps {
         System.out.println("Enter location for booking successful");
     }
 
+    @When("^I enter Pickup as \"(.*)\" for trip$")
+    public void pickUp_location(String arg1) {
+        WebElement pickupLocation = driver.findElement(By.name("pickup"));
+        pickupLocation.sendKeys(arg1);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        pickupLocation.sendKeys(Keys.ARROW_DOWN);
+        pickupLocation.sendKeys(Keys.RETURN);
+    }
+
+    @When("^I enter Destinaton as \"(.*)\" for trip$")
+    public void destinaton_location(String arg1) throws InterruptedException {
+        WebElement pickupLocation = driver.findElement(By.name("destination"));
+        pickupLocation.sendKeys(arg1);
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        pickupLocation.sendKeys(Keys.ARROW_DOWN);
+        pickupLocation.sendKeys(Keys.RETURN);
+        Thread.sleep(3000);
+        driver.findElement(By.name("btn-book-a-ride")).click();
+        System.out.println("Enter location for booking successful");
+    }
+
     @When ("^Select Car Type for Trip$")
     public void select_car_type_for_trip() throws Throwable
     {
+        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.presenceOfElementLocated(By.id("CarTypes")));
+        List rows = (List) driver.findElements(By.xpath("//*[@id=\"CarTypes\"]/div"));
+        System.out.println("Total Car Type of Fleet is : " + rows.size());
+
+        for (int i =0;i<rows.size();i++)
+        {
+            WebElement carTypes = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]"));
+            Thread.sleep(3000);
+            String valueIneed = carTypes.getText();
+            System.out.println("Car Type is : " + valueIneed);
+        }
+//        WebElement carTypes = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[2]"));
+//        Thread.sleep(3000);
+//        String valueIneed = carTypes.getText();
+//        System.out.println("Car Type is : " + valueIneed)
+
+
+
         System.out.println("This Step Select Car Type.");
 
     }
@@ -100,12 +149,20 @@ public class webExampleSteps {
         System.out.println("This Step Logout button.");
     }
 
+    @Then("^Verify ETA Fare by Car Type valid on the page$")
+    public void verify_eta_fare_by_car_type()
+    {
+        System.out.println("This Step verify ETA Fare.");
+        
+        driver.close();
+    }
+
     @Then("^Booked successful$")
-    public void select_car_type_and_type_to_booking() throws Throwable
+    public void booking_completed() throws Throwable
     {
         System.out.println("Booked.");
         Thread.sleep(3000);
-        driver.quit();
+        driver.close();
     }
 
     @Then("^Reset the credential$")
