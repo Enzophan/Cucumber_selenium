@@ -17,20 +17,28 @@ Feature: Reset functionality on login page of Application
 #    Then Logout page
 
 
+  Scenario: 1. Verification of booking more trip on Web Booking
+
+    Given Open the Firefox and launch the application
+    When I enter Pickup and Destination
+      |San Bay Da Nang            |Hoi An, Quang Nam          |
+      |3 Quang Trung, Da Nang     |Tam Ky, Quang Nam          |
+
+    And Select Car Type for Trip
+    And Enter passenger info
+    And Enter payment info
+    Then Booked successful
+
+
 #  Scenario: 2. Verification of booking one trip on Web Booking
 #
 #    Given Open the Firefox and launch the application
-#    When Enter Location to Booking one trip
+#    When I enter Pickup as "Sân Bay Quốc Tế Đà Nẵng" for trip
+#    And I enter Destinaton as "Furama Da nang" for trip
 #    And Select Car Type for Trip
+#    And Enter passenger info
+#    And Enter payment info
 #    Then Booked successful
+#    Then Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page
+#    |cartype| etaFare| etaDistance| etaTime|
 
-  Scenario: 2. Verification of booking more trip on Web Booking
-
-    Given Open the Firefox and launch the application
-    When I enter Pickup as "2 Quang Trung, TP Da Nang" for trip
-    And I enter Destinaton as "Furama Da nang" for trip
-    And Select Car Type for Trip
-    Then Verify ETA Fare by Car Type valid on the page
-    |Car Type     |ETA Fare       |
-    |SEDAN        |PHP0.00        |
-    |SUV          |PHP267.80      |
