@@ -120,8 +120,8 @@ public class webExampleSteps {
         System.out.println("Enter location for booking successful");
     }
 
-    @When ("^Select Car Type for Trip$")
-    public void select_car_type_for_trip() throws Throwable
+    @When ("^Select Booking Type is \"(.*)\" for Trip$")
+    public void select_car_type_for_trip(String arg1) throws Throwable
     {
         WebElement myDynamicElement = (new WebDriverWait(driver, 20))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("CarTypes")));
@@ -146,11 +146,29 @@ public class webExampleSteps {
             Thread.sleep(3000);
             String Later = bookLater.getText();
             System.out.println("Button is : " + Later);
-
+            WebElement actualETA = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[1]/span[2]/span"));
+            Thread.sleep(3000);
+            String ETA = actualETA.getText();
+            System.out.println("Estimated fare is : " + ETA);
+            WebElement distance = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[2]/span/span"));
+            Thread.sleep(3000);
+            String etaDistance = distance.getText();
+            System.out.println("Estimated Distance is : " + etaDistance);
+            WebElement time = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[3]/span/span"));
+            Thread.sleep(3000);
+            String etaTime = time.getText();
+            System.out.println("Estimated Time is : " + etaTime);
         }
         WebElement selectBooknow = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[1]/div[3]/div[3]/a[1]/span"));
+        WebElement selectBookLater = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[1]/div[3]/div[3]/a[2]/span"));
         Thread.sleep(3000);
-        selectBooknow.click();
+
+        if (arg1.equalsIgnoreCase("Book Now")) {
+            selectBooknow.click();
+        }else {
+            selectBookLater.click();
+        }
+
 
         System.out.println("This Step Select Car Type.");
 

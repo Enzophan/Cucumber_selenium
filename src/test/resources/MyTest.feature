@@ -24,10 +24,24 @@ Feature: Reset functionality on login page of Application
       |San Bay Da Nang            |Hoi An, Quang Nam          |
       |3 Quang Trung, Da Nang     |Tam Ky, Quang Nam          |
 
-    And Select Car Type for Trip
+    And Select Booking Type is "Book Now" for Trip
+    And Enter passenger info
+
+    And Enter payment info
+    Then Booked successful
+
+  Scenario: 1. Verification of booking more trip on Web Booking
+
+    Given Open the Firefox and launch the application
+    When I enter Pickup and Destination
+      |San Bay Da Nang            |Hoi An, Quang Nam          |
+      |3 Quang Trung, Da Nang     |Tam Ky, Quang Nam          |
+
+    And Select Booking Type is "Book Later" for Trip
     And Enter passenger info
     And Enter payment info
     Then Booked successful
+
 
 
 #  Scenario: 2. Verification of booking one trip on Web Booking

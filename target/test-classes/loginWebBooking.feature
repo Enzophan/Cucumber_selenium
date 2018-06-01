@@ -24,7 +24,7 @@ Feature: Reset functionality on login page of Application
       |San Bay Da Nang            |Hoi An, Quang Nam          |
       |3 Quang Trung, Da Nang     |Tam Ky, Quang Nam          |
 
-    And Select Booking Type is "Book Later" for Trip
+    And Select Car Type for Trip
     And Enter passenger info
     And Enter payment info
     Then Booked successful
