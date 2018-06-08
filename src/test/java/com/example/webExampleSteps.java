@@ -16,8 +16,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.Select;
 
 
-import java.util.Date;
-import java.util.List;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.security.Key;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.text.ParseException;
 
@@ -77,6 +80,7 @@ public class webExampleSteps {
         pickupLocation.sendKeys(data.get(0).get(0));
         Thread.sleep(3000);
         pickupLocation.sendKeys(Keys.ARROW_DOWN);
+        Thread.sleep(2000);
         pickupLocation.sendKeys(Keys.RETURN);
 
 
@@ -84,15 +88,15 @@ public class webExampleSteps {
         destinationLocation.sendKeys(data.get(0).get(1));
         Thread.sleep(3000);
         destinationLocation.sendKeys(Keys.ARROW_DOWN);
+        Thread.sleep(2000);
         destinationLocation.sendKeys(Keys.RETURN);
-
         Thread.sleep(3000);
         driver.findElement(By.name("btn-book-a-ride")).click();
         System.out.println("Enter location for booking successful");
     }
 
     @When("^I enter Pickup as \"(.*)\" for trip$")
-    public void pickUp_location(String arg1) {
+    public void pickUp_location(String arg1) throws InterruptedException{
         WebElement pickupLocation = driver.findElement(By.name("pickup"));
         pickupLocation.sendKeys(arg1);
         try {
@@ -101,6 +105,7 @@ public class webExampleSteps {
             e.printStackTrace();
         }
         pickupLocation.sendKeys(Keys.ARROW_DOWN);
+        Thread.sleep(2000);
         pickupLocation.sendKeys(Keys.RETURN);
     }
 
@@ -114,6 +119,7 @@ public class webExampleSteps {
             e.printStackTrace();
         }
         pickupLocation.sendKeys(Keys.ARROW_DOWN);
+        Thread.sleep(2000);
         pickupLocation.sendKeys(Keys.RETURN);
         Thread.sleep(3000);
         driver.findElement(By.name("btn-book-a-ride")).click();
@@ -123,82 +129,213 @@ public class webExampleSteps {
     @When ("^Select Booking Type is \"(.*)\" for Trip$")
     public void select_car_type_for_trip(String arg1) throws Throwable
     {
-        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+        WebElement myDynamicElement = (new WebDriverWait(driver, 30))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("CarTypes")));
         List rows = (List) driver.findElements(By.xpath("//*[@id=\"CarTypes\"]/div"));
         System.out.println("Total Car Type of Fleet is : " + rows.size());
-
-        for (int i =0;i<rows.size();i++)
-        {
-//            WebElement carTypes = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]"));
+//
+//        for (int i =0;i<rows.size();i++)
+//        {
+////            WebElement carTypes = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]"));
+////            Thread.sleep(3000);
+////            String valueIneed = carTypes.getText();
+////            System.out.println("All content : " + valueIneed);
+//            WebElement carType = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[1]/div[1]"));
 //            Thread.sleep(3000);
-//            String valueIneed = carTypes.getText();
-//            System.out.println("All content : " + valueIneed);
-            WebElement carType = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[1]/div[1]"));
-            Thread.sleep(3000);
-            String Car = carType.getText();
-            System.out.println("Car Type is : " + Car);
-            WebElement bookNow = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[3]/a[1]/span"));
-            Thread.sleep(3000);
-            String Now = bookNow.getText();
-            System.out.println("Button is : " + Now);
-            WebElement bookLater = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[3]/a[2]/span"));
-            Thread.sleep(3000);
-            String Later = bookLater.getText();
-            System.out.println("Button is : " + Later);
-            WebElement actualETA = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[1]/span[2]/span"));
-            Thread.sleep(3000);
-            String ETA = actualETA.getText();
-            System.out.println("Estimated fare is : " + ETA);
-            WebElement distance = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[2]/span/span"));
-            Thread.sleep(3000);
-            String etaDistance = distance.getText();
-            System.out.println("Estimated Distance is : " + etaDistance);
-            WebElement time = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[3]/span/span"));
-            Thread.sleep(3000);
-            String etaTime = time.getText();
-            System.out.println("Estimated Time is : " + etaTime);
-        }
+//            String Car = carType.getText();
+//            System.out.println("Car Type is : " + Car);
+//            WebElement bookNow = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[3]/a[1]/span"));
+//            Thread.sleep(3000);
+//            String Now = bookNow.getText();
+//            System.out.println("Button is : " + Now);
+//            WebElement bookLater = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[3]/a[2]/span"));
+//            Thread.sleep(3000);
+//            String Later = bookLater.getText();
+//            System.out.println("Button is : " + Later);
+//            WebElement actualETA = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[1]/span[2]/span"));
+//            Thread.sleep(3000);
+//            String ETA = actualETA.getText();
+//            System.out.println("Estimated fare is : " + ETA);
+//            WebElement distance = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[2]/span/span"));
+//            Thread.sleep(3000);
+//            String etaDistance = distance.getText();
+//            System.out.println("Estimated Distance is : " + etaDistance);
+//            WebElement time = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[" + (i+1)+ "]/div[3]/div[2]/div[3]/span/span"));
+//            Thread.sleep(3000);
+//            String etaTime = time.getText();
+//            System.out.println("Estimated Time is : " + etaTime);
+//        }
         WebElement selectBooknow = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[1]/div[3]/div[3]/a[1]/span"));
         WebElement selectBookLater = driver.findElement(By.xpath("//*[@id=\"CarTypes\"]/div[1]/div[3]/div[3]/a[2]/span"));
         Thread.sleep(3000);
 
         if (arg1.equalsIgnoreCase("Book Now")) {
             selectBooknow.click();
-        }else {
+        }else {if (arg1.equalsIgnoreCase("Book Later")){
             selectBookLater.click();
+        }else {
+            System.out.println("Booking Type not found");
         }
 
-
+        }
         System.out.println("This Step Select Car Type.");
 
     }
 
-    @When("^Enter passenger info$")
-    public void enter_passenger_info() throws Throwable
+    @When("^Enter ride info for \"(.*)\"$")
+    public void enter_ride_info_for(String arg1) throws Throwable
     {
+        if (arg1.equalsIgnoreCase("Book Now")){
+            Date date = new Date();
+            WebElement firstName = driver.findElement(By.name("firstname"));
+            firstName.sendKeys("Auto Test");
+            WebElement lastName = driver.findElement(By.name("lastname"));
+            lastName.sendKeys("Web Booking");
+            WebElement phonePassenger = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[2]/div/input"));
+            phonePassenger.sendKeys("+84901223344");
+            WebElement email = driver.findElement(By.name("email"));
+            email.sendKeys("qa.qupworld@gmail.com");
+            WebElement flight = driver.findElement(By.name("flight"));
+            flight.sendKeys("VNN-0009393");
+            Select select = new Select (driver.findElement(By.name("meetDriver")));
+            select.selectByVisibleText("Meet & Greet = no charge");
+            WebElement note = driver.findElement(By.name("note"));
+            note.sendKeys("Test date : " + date.toString() );
+            WebElement tip = driver.findElement(By.name("tip"));
+            tip.sendKeys("13");
+            WebElement promoCode = driver.findElement(By.name("promoCode"));
+            promoCode.sendKeys("AUTO001");
+            WebElement next = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[10]/a[1]/span"));
+            Thread.sleep(3000);
+            next.click();
+        }else {
+            if (arg1.equalsIgnoreCase("Book Later")){
+                Date date = new Date();
+                WebElement firstName = driver.findElement(By.name("firstname"));
+                firstName.sendKeys("Auto Test");
+                WebElement lastName = driver.findElement(By.name("lastname"));
+                lastName.sendKeys("Web Booking");
+                WebElement phonePassenger = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[2]/div/input"));
+                phonePassenger.sendKeys("+84901223344");
+                WebElement email = driver.findElement(By.name("email"));
+                email.sendKeys("qa.qupworld@gmail.com");
+                WebElement flight = driver.findElement(By.name("flight"));
+                flight.sendKeys("VNN-0009393");
+                WebElement datePicker = driver.findElement(By.name("date"));
+                datePicker.sendKeys("Jun 14 2019");
+                datePicker.sendKeys(Keys.TAB);
+                WebElement timePicker = driver.findElement(By.name("time"));
+                timePicker.sendKeys("02:40 PM");
+                timePicker.sendKeys(Keys.TAB);
+                Select select = new Select (driver.findElement(By.name("meetDriver")));
+                select.selectByVisibleText("Meet & Greet = no charge");
+                WebElement note = driver.findElement(By.name("note"));
+                note.sendKeys("Test date : " + date.toString() );
+                WebElement tip = driver.findElement(By.name("tip"));
+                tip.sendKeys("13");
+                WebElement promoCode = driver.findElement(By.name("promoCode"));
+                promoCode.sendKeys("AUTO001");
+                WebElement applyPromo = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[9]/div[2]/div[2]/div"));
+                applyPromo.click();
+                WebElement next = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[10]/a[1]/span"));
+                Thread.sleep(3000);
+                next.click();
+            }
+        }
+        }
+
+    @When("^Enter passenger info and ride info$")
+    public void enter_passenger_info_and_ride_info(DataTable usercredentials) throws Throwable{
+        List<List<String>> data = usercredentials.raw();
+
         Date date = new Date();
+
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 2);
+        date = c.getTime();
+
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+//        String DateToStr = format.format(date);
+        SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy", Locale.ENGLISH);
+        String DateToStr = format.format(date);
+        System.out.println(DateToStr);
+
+
         WebElement firstName = driver.findElement(By.name("firstname"));
-        firstName.sendKeys("Auto Test");
+        firstName.sendKeys(data.get(1).get(0));
         WebElement lastName = driver.findElement(By.name("lastname"));
-        lastName.sendKeys("Web Booking");
+        lastName.sendKeys(data.get(1).get(1));
         WebElement phonePassenger = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[2]/div/input"));
-        phonePassenger.sendKeys("+84901223344");
+        phonePassenger.sendKeys(data.get(1).get(2));
         WebElement email = driver.findElement(By.name("email"));
-        email.sendKeys("qa.qupworld@gmail.com");
-        WebElement flight = driver.findElement(By.name("flight"));
-        flight.sendKeys("VNN-0009393");
-        Select select = new Select (driver.findElement(By.name("meetDriver")));
-        select.selectByVisibleText("Meet & Greet = no charge");
+        email.sendKeys(data.get(1).get(3));
+
+        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.presenceOfElementLocated(By.name("flight")));
+        List rows = (List) driver.findElements(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[5]/div/div[1]/input"));
+
+        System.out.println("Flight number is : " + rows.size());
+        for (int i =0;i<rows.size();i++) {
+
+            WebElement flight = driver.findElement(By.name("flight"));
+            Thread.sleep(1000);
+            flight.sendKeys("VNN-0009393");
+
+        };
+
+        List rowsNew = (List) driver.findElements(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[5]/div/div[1]/div[1]/input"));
+        System.out.println("Flight number is (Flight #, e.g AA1097): " + rowsNew.size());
+        for (int i =0;i<rowsNew.size();i++) {
+            WebElement flight = driver.findElement(By.name("flight"));
+            Thread.sleep(1000);
+            flight.sendKeys(data.get(1).get(4));
+
+        };
+
+        List rowsDate = (List) driver.findElements(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[4]/div"));
+        System.out.println("Date Picker is : " + rowsDate.size());
+        for (int i =0;i<rowsDate.size();i++) {
+            boolean datePickerDisplay=driver.findElement(By.name("date")).isDisplayed();
+            System.out.println("Date Picker has display? :" + datePickerDisplay);
+            if(datePickerDisplay == true) {
+                WebElement datePicker = driver.findElement(By.name("date"));
+                datePicker.sendKeys(DateToStr);
+                datePicker.sendKeys(Keys.TAB);
+                WebElement timePicker = driver.findElement(By.name("time"));
+                timePicker.sendKeys("19:40 PM");
+                timePicker.sendKeys(Keys.TAB);
+            }
+
+        };
+
+        List meetDriver = (List) driver.findElements(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[6]"));
+        System.out.println("Meet & Greet is : " + meetDriver.size());
+        for (int i =0;i<meetDriver.size();i++) {
+            boolean meetDriverDisplay=driver.findElement(By.name("meetDriver")).isDisplayed();
+            System.out.println("Meet & Greet has display? :" + meetDriverDisplay);
+            if(meetDriverDisplay == true){
+                Select select = new Select (driver.findElement(By.name("meetDriver")));
+                select.selectByValue(data.get(1).get(5));
+            }
+        };
+
+
         WebElement note = driver.findElement(By.name("note"));
         note.sendKeys("Test date : " + date.toString() );
         WebElement tip = driver.findElement(By.name("tip"));
-        tip.sendKeys("13");
+        tip.sendKeys(Keys.CONTROL + "a");
+        tip.sendKeys(Keys.DELETE);
+        tip.sendKeys(data.get(1).get(6));
         WebElement promoCode = driver.findElement(By.name("promoCode"));
-        promoCode.sendKeys("AUTO001");
+        promoCode.sendKeys(data.get(1).get(7));
+        WebElement applyPromo = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[9]/div[2]/div[2]/div"));
+        applyPromo.click();
+
         WebElement next = driver.findElement(By.xpath("//*[@id=\"app\"]/div[3]/div[2]/div[2]/div/div[10]/a[1]/span"));
         Thread.sleep(3000);
         next.click();
+        System.out.println("Enter passenger info and ride info successful");
 
     }
 
@@ -291,19 +428,63 @@ public class webExampleSteps {
         System.out.println("This Step verify ETA Fare.");
 
         driver.close();
+
     }
 
     @Then("^Booked successful$")
-    public void booking_completed() throws Throwable
+    public void booking_completed(DataTable usercredentials) throws Throwable
     {
+        List<List<String>> data = usercredentials.raw();
+
         WebElement bookingSummary = driver.findElement(By.className("booking-summary"));
         Thread.sleep(1000);
         String summary = bookingSummary.getText();
+        System.out.println("Booked : " + summary);
+        Thread.sleep(3000);
+        WebElement estimateFare = driver.findElement(By.cssSelector(".confirmEta"));
+        Thread.sleep(3000);
+        String valueIneed = estimateFare.getText();
+        System.out.println("Estimate fare is : " + valueIneed);
+
+        if(valueIneed.equalsIgnoreCase(data.get(1).get(0))){
+            System.out.println("Estimate fare is Passed");
+        } else {
+            System.out.println("Estimate fare is Failed, Expected is: " + data.get(1).get(0));
+            driver.close();
+        }
+
         WebElement next = driver.findElement(By.xpath("//*[@id=\"app\"]/div[5]/div[2]/div/div[1]/div[2]/a[1]/span"));
         Thread.sleep(1000);
         next.click();
-        System.out.println("Booked : " + summary);
-        Thread.sleep(3000);
+
+    }
+
+    @Then("^Verify status booking after request$")
+    public void verify_status_booking_after_request()throws Throwable{
+
+        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.presenceOfElementLocated(By.className("message-panel")));
+
+        WebElement titleStatus = driver.findElement(By.className("title"));
+        Thread.sleep(1000);
+        String title = titleStatus.getText();
+        System.out.println("Title status booking is : " + title);
+
+        WebElement messageStatus = driver.findElement(By.className("message"));
+        Thread.sleep(1000);
+        String message = messageStatus.getText();
+        System.out.println("Message of booking is : " + message);
+
+        if(title.equalsIgnoreCase("OOPS!!!")){
+            System.out.println("Create the booking is failed!!!");
+            driver.close();
+        };
+
+        WebElement bookAnotherRide = driver.findElement(By.xpath("//*[@id=\"app\"]/div[5]/div[2]/div/div[2]/div[2]/a[2]"));
+        Thread.sleep(1000);
+        bookAnotherRide.click();
+        Thread.sleep(4000);
+
         driver.close();
     }
 

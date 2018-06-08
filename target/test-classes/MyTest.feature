@@ -16,29 +16,72 @@ Feature: Reset functionality on login page of Application
 #    |+84901223344  |demo@12345   |
 #    Then Logout page
 
-
+#
   Scenario: 1. Verification of booking more trip on Web Booking
-
     Given Open the Firefox and launch the application
     When I enter Pickup and Destination
       |San Bay Da Nang            |Hoi An, Quang Nam          |
-      |3 Quang Trung, Da Nang     |Tam Ky, Quang Nam          |
-
-    And Select Booking Type is "Book Later" for Trip
-    And Enter passenger info
+    And Select Booking Type is "Book Now" for Trip
+    And Enter ride info for "Book Now"
     And Enter payment info
     Then Booked successful
-
-
-#  Scenario: 2. Verification of booking one trip on Web Booking
+      |ETA Fare    |
+      |PHP85,676.60|
+    And Verify status booking after request
 #
-#    Given Open the Firefox and launch the application
-#    When I enter Pickup as "Sân Bay Quốc Tế Đà Nẵng" for trip
-#    And I enter Destinaton as "Furama Da nang" for trip
-#    And Select Car Type for Trip
-#    And Enter passenger info
-#    And Enter payment info
-#    Then Booked successful
-#    Then Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page
-#    |cartype| etaFare| etaDistance| etaTime|
+  Scenario: 2. Verification of booking more trip on Web Booking
+    Given Open the Firefox and launch the application
+    When I enter Pickup and Destination
+      |San Bay Da Nang            |Hoi An, Quang Nam          |
+    And Select Booking Type is "Book Later" for Trip
+    And Enter ride info for "Book Later"
+    And Enter payment info
+    Then Booked successful
+      |ETA Fare     |
+      |PHP138,766.60|
+    And Verify status booking after request
+#
+  Scenario: 3. Verification of booking one trip on Web Booking
 
+    Given Open the Firefox and launch the application
+    When I enter Pickup as "2 Quang Trung, Da Nang" for trip
+    And I enter Destinaton as "San Bay Da Nang" for trip
+    And Select Booking Type is "Book Now" for Trip
+    And Enter passenger info and ride info
+    |firstname|lastname|phonePassenger|email                 |flight    |meetDriver|tip|promoCode|
+    |Nhân     |Phan    |+84904777447  |phannhan.dn@gmail.com |VJC502    |          |19 |AUTO001  |
+    And Enter payment info
+    Then Booked successful
+    |ETA Fare    |
+    |PHP91,803.80|
+    And Verify status booking after request
+#
+  Scenario: 4. Verification of booking one trip on Web Booking
+
+    Given Open the Firefox and launch the application
+    When I enter Pickup as "San Bay Da Nang" for trip
+    And I enter Destinaton as "123 Ngô Quyền, Đà Nẵng" for trip
+    And Select Booking Type is "Book Now" for Trip
+    And Enter passenger info and ride info
+      |firstname|lastname|phonePassenger|email                 |flight    |meetDriver|tip|promoCode|
+      |Nhân     |Phan    |+84904777447  |phannhan.dn@gmail.com |VJC502    |1         |19 |AUTO001  |
+    And Enter payment info
+    Then Booked successful
+      |ETA Fare    |
+      |PHP91,803.80|
+    And Verify status booking after request
+
+  Scenario: 5. Verification of booking one trip on Web Booking
+
+    Given Open the Firefox and launch the application
+    When I enter Pickup as "San Bay Da Nang" for trip
+    And I enter Destinaton as "123 Ngô Quyền, Đà Nẵng" for trip
+    And Select Booking Type is "Book Later" for Trip
+    And Enter passenger info and ride info
+      |firstname|lastname|phonePassenger|email                 |flight    |meetDriver|tip|promoCode|
+      |Nhân     |Phan    |+84904777447  |phannhan.dn@gmail.com |VJC502    |1         |19 |AUTO001  |
+    And Enter payment info
+    Then Booked successful
+    |ETA Fare    |
+    |PHP91,803.80|
+    And Verify status booking after request
