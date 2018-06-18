@@ -68,7 +68,7 @@ Feature: Reset functionality on login page of Application
     And Enter payment info
     Then Booked successful
       |ETA Fare    |
-      |PHP91,803.80|
+      |PHP38,558.20|
     And Verify status booking after request
 
   Scenario: 5. Verification of booking one trip on Web Booking
