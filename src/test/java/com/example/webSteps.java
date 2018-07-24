@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.text.ParseException;
 
-public class webExampleSteps {
+public class webSteps {
 
     WebDriver driver;
 
@@ -455,13 +455,102 @@ public class webExampleSteps {
     @Then("^Logout page$")
     public void logout_page() throws Throwable
     {
-        driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[6]")).click();
+//        driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[6]")).click();
 
-        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+        WebElement logOut = (new WebDriverWait(driver, 200))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[6]/span")));
+        driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[6]/span")).click();
+
+
+        WebElement myDynamicElement = (new WebDriverWait(driver, 200))
                 .until(ExpectedConditions.presenceOfElementLocated(By.id("contentStep1")));
         Thread.sleep(3000);
         System.out.println("This Step Logout button.");
     }
+
+    @Then("^Passenger add credit card after logined$")
+    public void passenger_add_credit_card(DataTable usercredentials) throws Throwable{
+        List<List<String>> data = usercredentials.raw();
+        WebElement paymentMethod = (new WebDriverWait(driver, 200))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[2]/span")));
+        paymentMethod.click();
+
+        //Select Home Fleet or Provider Fleet
+        Select affiliation = new Select(driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/select[1]")));
+        affiliation.selectByVisibleText(data.get(1).get(0));
+
+//       Add Card
+        driver.findElement(By.className("addCard")).click();
+
+        WebElement cardHolder = driver.findElement(By.id("loginCardNumber"));
+        cardHolder.sendKeys(data.get(1).get(1));
+
+        WebElement cardNumber = driver.findElement(By.id("CardNumber"));
+        cardNumber.sendKeys(data.get(1).get(2));
+
+        WebElement cvv = driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[2]/div/div/div/div/form/div[3]/div/input"));
+        cvv.sendKeys(data.get(1).get(3));
+
+        WebElement expiredDate = driver.findElement(By.name("expired"));
+        expiredDate.sendKeys(data.get(1).get(4));
+
+//      Submit add card
+        driver.findElement(By.className("saveCard")).click();
+
+        Thread.sleep(3000);
+        System.out.println("This Add Credit Card.");
+    }
+
+
+    @Then("^Passenger remove credit card after logined$")
+    public void passenger_remove_credit_card (DataTable usercredentials) throws Throwable
+    {
+        List<List<String>> data = usercredentials.raw();
+        WebElement paymentMethod = (new WebDriverWait(driver, 200))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[2]/span")));
+        paymentMethod.click();
+
+        //Select Home Fleet or Provider Fleet
+        Select affiliation = new Select(driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/select[1]")));
+        affiliation.selectByVisibleText(data.get(1).get(0));
+
+
+        WebElement myDynamicElement = (new WebDriverWait(driver, 20))
+                .until(ExpectedConditions.presenceOfElementLocated(By.className("listCard")));
+        List rows = (List) driver.findElements(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/ul/li"));
+        System.out.println("Total Credit Card of User is : " + rows.size());
+
+        for (int i =0 ; i < rows.size() ; i++ )
+        {
+//          Find URL Image
+            WebElement imageCardType = driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/ul/li[" + (i+1)+ "]/img"));
+            Thread.sleep(3000);
+            String imageCardTypeSRC = imageCardType.getAttribute("src");
+            System.out.println("URL Image of Credit Card is : " + imageCardTypeSRC);
+
+            WebElement creditCard = driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/ul/li[" + (i+1)+ "]/span"));
+            Thread.sleep(3000);
+            String creditCardName = creditCard.getText();
+            System.out.println("Credit Card Name is : " + creditCardName);
+
+            WebElement options = driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/ul/li[" + (i+1)+ "]/div/span"));
+            Thread.sleep(3000);
+            options.click();
+            driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[3]/div/ul/li[" + (i+1)+ "]/div/p")).click();
+
+            WebElement confirmRemoveCard = driver.findElement(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[2]/div/div[2]/div[1]/div/div/span[2]"));
+            Thread.sleep(3000);
+            confirmRemoveCard.click();
+            Thread.sleep(5000);
+        }
+
+        Thread.sleep(3000);
+        System.out.println("This Remove Credit Card.");
+    }
+
+
+
+
 
     @Then("^Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page$")
     public void verify_eta_fare_by_car_type() throws Throwable
