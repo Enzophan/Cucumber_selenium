@@ -705,6 +705,33 @@ public class webSteps {
         driver.close();
     }
 
+    @Then ("^Select \"(.*)\" tab$")
+    public void select_tab (String arg) throws Throwable{
+
+        WebElement logoImage = (new WebDriverWait(driver, 200))
+                .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[1]/img")));
+
+        switch (arg){
+            case "My Bookings":
+                WebElement myBookings = (new WebDriverWait(driver, 200))
+                        .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[1]/text()")));
+                Thread.sleep(1000);
+                myBookings.click();
+                Thread.sleep(3000);
+                break;
+            case "Payment Method":
+                WebElement paymentMethod = (new WebDriverWait(driver, 200))
+                        .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app-container\"]/div/div[3]/div[2]/div[2]/div/div[1]/div/ul/li[2]/span")));
+                Thread.sleep(1000);
+                paymentMethod.click();
+                Thread.sleep(3000);
+                break;
+
+        }
+    }
+
+
+
     @Then("^Closing Web Booking$")
     public void closing_web_booking () throws Throwable {
         driver.close();

@@ -9,10 +9,11 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
         features={
 //                "src/test/resources/MyTest.feature"
-                "src/test/resources/TC_ETAFare_01_Local.feature",
+//                "src/test/resources/TC_ETAFare_01_Local.feature"
 //                "src/test/resources/TC_ETAFare_01_Beta.feature",
 
-                "src/test/resources/TC_LoginWB_01.feature"
+//                "src/test/resources/TC_LoginWB_01.feature"
+                "src/test/resources/TC_LoginWB_AddCard_01.feature"
 
 
         }

@@ -7,7 +7,7 @@ Feature: Verify ETA Fare on Local
     Then Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page
     And I compare with ETA Fare, Distance, Time by Car Type
       |Car Type|Estimated fare|Estimated Distance|Estimated Time|
-      |BIKE    |₫201,600      |29.1 km           |45 minutes    |
+      |BIKE    |₫201,600      |29.1 km           |46 minutes    |
     And Closing Web Booking
 
   Scenario: 2. Verification of booking more trip on Web Booking
@@ -17,7 +17,7 @@ Feature: Verify ETA Fare on Local
     Then Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page
     And I compare with ETA Fare, Distance, Time by Car Type
       |Car Type|Estimated fare|Estimated Distance|Estimated Time|
-      |BIKE    |₫203,460      |29.4 km           |46 minutes    |
+      |BIKE    |₫203,400      |29.4 km           |45 minutes    |
     And Closing Web Booking
 
   Scenario: 3. Verification of booking more trip on Web Booking
@@ -27,5 +27,5 @@ Feature: Verify ETA Fare on Local
     Then Verify ETA Fare and ETA Distance and ETA Time by Car Type valid on the page
     And I compare with ETA Fare, Distance, Time by Car Type
       |Car Type|Estimated fare|Estimated Distance|Estimated Time|
-      |BIKE    |₫203,460      |29.4 km           |46 minutes    |
+      |BIKE    |₫203,400      |29.4 km           |45 minutes    |
     And Closing Web Booking
