@@ -35,7 +35,7 @@ public class webSteps {
     @Given("^Open the Firefox and launch the application$")
     public void open_the_Firefox_and_launch_the_application() throws Throwable
     {
-        System.setProperty("webdriver.gecko.driver", "E://Testing//geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "D://nhan.phan//Testing//geckodriver.exe");
         driver= new FirefoxDriver();
         driver.manage().window().maximize();
 //        driver.get("https://wb.lab.qup.vn/booking.html?fleet=ecar");
@@ -48,7 +48,7 @@ public class webSteps {
     @Given("^Open the chrome and launch the application$")
     public void open_the_chrome_and_launch_the_application () throws Throwable
     {
-        System.setProperty("webdriver.chrome.driver", "E://Testing//chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D://nhan.phan//Testing//chromedriver.exe");
         driver= new ChromeDriver();
         driver.manage().window().maximize();
 //        driver.get("https://wb.lab.qup.vn/booking.html?fleet=ecar");
@@ -64,11 +64,11 @@ public class webSteps {
 
         switch (arg1){
             case "chrome":
-                System.setProperty("webdriver.chrome.driver", "E://Testing//chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", "D://nhan.phan//Testing//chromedriver.exe");
                 driver= new ChromeDriver();
                 break;
             case "firefox":
-                System.setProperty("webdriver.gecko.driver", "E://Testing//geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", "D://nhan.phan//Testing//geckodriver.exe");
                 driver= new FirefoxDriver();
                 break;
 
